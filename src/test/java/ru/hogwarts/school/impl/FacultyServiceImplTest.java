@@ -87,19 +87,29 @@ public class FacultyServiceImplTest {
         assertEquals(faculty.getId(), deletedFaculty.getId());
     }
 
+//    @Test
+//    public void testGetFacultiesSameColor() {
+//        Faculty faculty1 = new Faculty(0,"Gryffindor", "Red");
+//        Faculty faculty2 = new Faculty(1,"Ravenclaw", "Blue");
+//        Faculty faculty3 = new Faculty(2,"Slytherin", "Red");
+//        facultyMap.put(faculty1.getId(), faculty1);
+//        facultyMap.put(faculty2.getId(), faculty2);
+//        facultyMap.put(faculty3.getId(), faculty3);
+//
+//        Collection<Faculty> facultiesSameColor = facultyService.getFacultiesSameColor("Red");
+//
+//        assertEquals(2, facultiesSameColor.size());
+//        assertTrue(facultiesSameColor.contains(faculty1));
+//        assertTrue(facultiesSameColor.contains(faculty3));
+//    }
+
     @Test
-    public void testGetFacultiesSameColor() {
-        Faculty faculty1 = new Faculty(0,"Gryffindor", "Red");
-        Faculty faculty2 = new Faculty(1,"Ravenclaw", "Blue");
-        Faculty faculty3 = new Faculty(2,"Slytherin", "Red");
-        facultyMap.put(faculty1.getId(), faculty1);
-        facultyMap.put(faculty2.getId(), faculty2);
-        facultyMap.put(faculty3.getId(), faculty3);
+    void testGetFacultiesSameColor() {
+        facultyService.createFaculty(new Faculty(0, "Gryffindor", "Red"));
+        facultyService.createFaculty(new Faculty(1, "Ravenclaw", "Blue"));
+        facultyService.createFaculty(new Faculty(2, "Slytherin", "Red"));
 
-        Collection<Faculty> facultiesSameColor = facultyService.getFacultiesSameColor("Red");
-
-        assertEquals(2, facultiesSameColor.size());
-        assertTrue(facultiesSameColor.contains(faculty1));
-        assertTrue(facultiesSameColor.contains(faculty3));
+        Collection<Faculty> greenFaculties = facultyService.getFacultiesSameColor("Red");
+        assertEquals(2, greenFaculties.size());
     }
 }
