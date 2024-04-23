@@ -1,6 +1,8 @@
 package ru.hogwarts.school.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.service.FacultyService;
 import ru.hogwarts.school.model.Faculty;
@@ -38,7 +40,22 @@ public class FacultyServiceImpl implements FacultyService {
         return facultyRepository.findAll();
     }
 
-    public Collection<Faculty> getFacultiesSameColor(String color) {
-       return allFaculties().stream().filter(faculty -> faculty.getColor().equals(color)).collect(Collectors.toList());
+    public List<Faculty> findFacultiesByNameOrColor(String search) {
+        return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(search, search);
     }
+
+
+    public Collection<Faculty> getFacultiesSameColor(String color) {
+        return facultyRepository.findAll().stream()
+                .filter(f -> f.getColor().equals(color))
+                .collect(Collectors.toList());
+    }
+
+    public Set<Student> getStudentsByFaculty(Long facultyId) {
+        Faculty faculty = facultyRepository.findById(facultyId)
+                .orElseThrow(() -> new EntityNotFoundException("Факультет не найден " + facultyId));
+        return faculty.getStudents();
+    }
+
+
 }
