@@ -27,6 +27,10 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findById(id).orElseThrow();
     }
 
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+
     public Student updateStudent(Student student) {
         return studentRepository.save(student);
     }

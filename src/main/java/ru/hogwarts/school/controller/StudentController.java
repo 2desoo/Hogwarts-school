@@ -32,6 +32,11 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
+    @GetMapping
+    public Collection<Student> getAllStudents() {
+        return studentServiceImpl.allStudents();
+    }
+
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student student1 = studentServiceImpl.updateStudent(student);
