@@ -12,7 +12,7 @@ public class Student {
     private Faculty faculty;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private int age;
@@ -63,18 +63,19 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return age == student.age && Objects.equals(id, student.id) && Objects.equals(name, student.name);
+        return id == student.id && age == student.age && Objects.equals(faculty, student.faculty) && Objects.equals(name, student.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age);
+        return Objects.hash(faculty, id, name, age);
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + id +
+                "faculty=" + faculty +
+                ", id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 '}';

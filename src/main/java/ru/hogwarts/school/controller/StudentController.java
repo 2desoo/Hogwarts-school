@@ -36,7 +36,7 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping
+    @GetMapping(path = "/all")
     @Operation(summary = "Get all students")
     public ResponseEntity<Collection<Student>> getAllStudents() {
         Collection<Student> students = studentServiceImpl.getAllStudents();
