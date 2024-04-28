@@ -1,6 +1,7 @@
 package ru.hogwarts.school.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Faculty {
 
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
