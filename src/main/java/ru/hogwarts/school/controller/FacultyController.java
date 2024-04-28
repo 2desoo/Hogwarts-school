@@ -1,10 +1,11 @@
 package ru.hogwarts.school.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.impl.FacultyServiceImpl;
+import ru.hogwarts.school.service.impl.FacultyServiceImpl;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
@@ -12,7 +13,9 @@ import java.util.Collections;
 
 @RestController
 @RequestMapping("/faculty")
+@Tag(name = "API по работе с факультетами")
 public class FacultyController {
+
     private final FacultyServiceImpl facultyServiceImpl;
 
     public FacultyController(FacultyServiceImpl facultyServiceImpl) {
@@ -71,7 +74,7 @@ public class FacultyController {
 
     @GetMapping("/search")
     @Operation(summary = "Find faculties by name or color")
-    public ResponseEntity<Collection<Faculty>> findFacultiesByNameOrColor(@PathVariable String search) {
+    public ResponseEntity<Collection<Faculty>> findFacultiesByNameOrColor(@RequestParam String search) {
         Collection<Faculty> faculties = facultyServiceImpl.findFacultiesByNameOrColor(search);
         return ResponseEntity.ok(faculties);
     }

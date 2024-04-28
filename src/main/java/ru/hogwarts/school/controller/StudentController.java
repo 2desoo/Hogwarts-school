@@ -1,17 +1,18 @@
 package ru.hogwarts.school.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.impl.StudentServiceImpl;
+import ru.hogwarts.school.service.impl.StudentServiceImpl;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("/student")
+@Tag(name = "API по работе со студентами")
 public class StudentController {
     private final StudentServiceImpl studentServiceImpl;
 
@@ -62,7 +63,7 @@ public class StudentController {
 
     @GetMapping("/age")
     @Operation(summary = "Get student same age")
-    public ResponseEntity<Collection<Student>> getStudentsSameAge(@PathVariable int age) {
+    public ResponseEntity<Collection<Student>> getStudentsSameAge(@RequestParam int age) {
         Collection<Student> students = studentServiceImpl.getStudentsSameAge(age);
         return ResponseEntity.ok(students);
     }

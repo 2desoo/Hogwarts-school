@@ -1,4 +1,4 @@
-package ru.hogwarts.school.impl;
+package ru.hogwarts.school.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
