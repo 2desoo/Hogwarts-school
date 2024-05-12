@@ -70,7 +70,7 @@ public class StudentController {
 
     @GetMapping("/age-range")
     @Operation(summary = "Get student by age-range")
-    public ResponseEntity<Collection<Student>> getStudentsByAgeRange(@RequestParam int min, @RequestParam int max) {
+    public ResponseEntity<Collection<Student>> getStudentsByAgeRange(@RequestParam Integer min, @RequestParam Integer max) {
         Collection<Student> students = studentServiceImpl.getStudentsByAgeRange(min, max);
         return ResponseEntity.ok(students);
     }

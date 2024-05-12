@@ -5,7 +5,6 @@ import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public interface FacultyService {
     Faculty createFaculty(Faculty faculty);
@@ -20,7 +19,7 @@ public interface FacultyService {
 
     Collection<Faculty> getFacultiesSameColor(String color);
 
-    List<Faculty> findFacultiesByNameOrColor(String search);
+    List<Faculty> findFacultiesByNameOrColor(String name, String color);
 
-    Set<Student> getStudentsByFaculty(Long facultyId);
+    List<Student> getStudentsByFaculty(Long facultyId);
 }

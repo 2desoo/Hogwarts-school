@@ -31,7 +31,7 @@ public class FacultyController {
 
     @GetMapping("{id}")
     @Operation(summary = "Get faculty by ID")
-    public ResponseEntity<Faculty> getFaculty(@PathVariable long id) {
+    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
         Faculty faculty = facultyServiceImpl.getFaculty(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
@@ -74,8 +74,9 @@ public class FacultyController {
 
     @GetMapping("/search")
     @Operation(summary = "Find faculties by name or color")
-    public ResponseEntity<Collection<Faculty>> findFacultiesByNameOrColor(@RequestParam String search) {
-        Collection<Faculty> faculties = facultyServiceImpl.findFacultiesByNameOrColor(search);
+    public ResponseEntity<Collection<Faculty>> findFacultiesByNameOrColor(@RequestParam String color,
+                                                                          @RequestParam String name) {
+        Collection<Faculty> faculties = facultyServiceImpl.findFacultiesByNameOrColor(color, name);
         return ResponseEntity.ok(faculties);
     }
 

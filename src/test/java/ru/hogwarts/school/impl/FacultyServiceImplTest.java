@@ -6,6 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.repository.FacultyRepository;
+import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.impl.FacultyServiceImpl;
 
 import java.util.*;
@@ -17,6 +19,9 @@ public class FacultyServiceImplTest {
 
     @Mock
     private Map<Long, Faculty> facultyMap;
+
+    @Mock
+    private FacultyRepository rep;
 
     @InjectMocks
     private FacultyServiceImpl facultyService;
@@ -37,6 +42,7 @@ public class FacultyServiceImplTest {
         });
 
         Faculty createdFaculty = facultyService.createFaculty(faculty);
+        rep.save(createdFaculty);
 
         assertNotNull(createdFaculty);
         assertEquals("Gryffindor", createdFaculty.getName());

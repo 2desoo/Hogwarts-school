@@ -23,7 +23,7 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     public Faculty getFaculty(Long id) {
-        return facultyRepository.getReferenceById(id);
+        return facultyRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public Faculty updateFaculty(Faculty faculty) {
@@ -40,8 +40,8 @@ public class FacultyServiceImpl implements FacultyService {
         return facultyRepository.findAll();
     }
 
-    public List<Faculty> findFacultiesByNameOrColor(String search) {
-        return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(search, search);
+    public List<Faculty> findFacultiesByNameOrColor(String name, String color) {
+        return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(name, color);
     }
 
 
@@ -51,7 +51,7 @@ public class FacultyServiceImpl implements FacultyService {
                 .collect(Collectors.toList());
     }
 
-    public Set<Student> getStudentsByFaculty(Long facultyId) {
+    public List<Student> getStudentsByFaculty(Long facultyId) {
         Faculty faculty = facultyRepository.findById(facultyId)
                 .orElseThrow(() -> new EntityNotFoundException("Факультет не найден " + facultyId));
         return faculty.getStudents();

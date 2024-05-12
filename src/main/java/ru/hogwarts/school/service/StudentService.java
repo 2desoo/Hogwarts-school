@@ -21,5 +21,5 @@ public interface StudentService {
 
     Faculty getFacultyByStudent(Long studentId);
 
-    List<Student> getStudentsByAgeRange(int min, int max);
+    List<Student> getStudentsByAgeRange(Integer min, Integer max);
 }

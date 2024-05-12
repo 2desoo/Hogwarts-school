@@ -24,7 +24,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public Student getStudent(Long id) {
-        return studentRepository.findById(id).orElseThrow();
+        return studentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public List<Student> getAllStudents() {
@@ -47,6 +47,7 @@ public class StudentServiceImpl implements StudentService {
 
     public Collection<Student> getStudentsSameAge(int age) {
         return allStudents().stream().filter(student -> student.getAge() == age).collect(Collectors.toList());
+//        return studentRepository.findStudentsSameAge(age);
     }
 
     public Faculty getFacultyByStudent(Long studentId) {
@@ -55,7 +56,7 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new EntityNotFoundException("Студент не найден " + studentId));
     }
 
-    public List<Student> getStudentsByAgeRange(int min, int max) {
+    public List<Student> getStudentsByAgeRange(Integer min, Integer max) {
         return studentRepository.findByAgeBetween(min, max);
     }
 }
