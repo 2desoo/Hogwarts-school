@@ -24,7 +24,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public Student getStudent(Long id) {
-        return studentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return studentRepository.findById(id).orElseThrow(ru.hogwarts.school.exception.EntityNotFoundException::new);
     }
 
     public List<Student> getAllStudents() {

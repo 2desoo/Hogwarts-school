@@ -35,9 +35,8 @@ public class AvatarServiceImplTest {
 
     @Test
     void testUploadAvatar() throws IOException {
-        // Arrange
         Long studentId = 1L;
-        String avatarsDir = "/path/to/avatars";
+        String avatarsDir = "path.to.avatars.folder";
         String originalFileName = "253.jpg";
         byte[] content = "image data".getBytes();
         MockMultipartFile multipartFile = new MockMultipartFile(originalFileName, content);
@@ -49,10 +48,8 @@ public class AvatarServiceImplTest {
         Avatar savedAvatar = new Avatar();
         when(avatarRepository.save(any())).thenReturn(savedAvatar);
 
-        // Act
         avatarService.uploadAvatar(studentId, multipartFile);
 
-        // Assert
         verify(studentRepository, times(1)).getReferenceById(studentId);
         verify(avatarRepository, times(1)).findByStudentId(studentId);
 

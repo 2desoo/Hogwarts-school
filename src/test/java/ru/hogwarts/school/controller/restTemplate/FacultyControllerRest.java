@@ -56,9 +56,10 @@ public class FacultyControllerRest {
 
     @Test
     public void getStudentFacultyTest() {
+        Faculty faculty = createMockFaculty();
 
         List<Student> students = testRestTemplate.exchange(
-                "http://localhost:" + port + "/faculty/" + MOCK_FACULTY_ID + "/students",
+                "http://localhost:" + port + "/faculty/" + faculty.getId() + "/students",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Student>>() {
@@ -134,13 +135,21 @@ public class FacultyControllerRest {
     }
 
     @Test
-    void testDeleteFaculty() {
-        String url = "http://localhost:" + port + "/faculty/" + MOCK_FACULTY_ID;
+    public void deleteFacultyTest() {
 
-        testRestTemplate.delete(url);
+        Faculty facultyTest = createMockFaculty();
 
-        ResponseEntity<Faculty> response = testRestTemplate.getForEntity(url, Faculty.class);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        testRestTemplate.delete(
+                "http://localhost:" + port + "/faculty/" + facultyTest.getId(),
+                Faculty.class
+        );
+
+        ResponseEntity<Faculty> getFaculty = testRestTemplate.getForEntity(
+                "http://localhost:" + port + "/faculty/" + facultyTest.getId(),
+                Faculty.class
+        );
+
+        assertThat(getFaculty.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     public Faculty createMockFaculty() {

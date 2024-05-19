@@ -23,7 +23,7 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     public Faculty getFaculty(Long id) {
-        return facultyRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return facultyRepository.findById(id).orElseThrow(ru.hogwarts.school.exception.EntityNotFoundException::new);
     }
 
     public Faculty updateFaculty(Faculty faculty) {
