@@ -2,8 +2,8 @@ package ru.hogwarts.school.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.entity.Faculty;
+import ru.hogwarts.school.entity.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
@@ -58,5 +58,17 @@ public class StudentServiceImpl implements StudentService {
 
     public List<Student> getStudentsByAgeRange(Integer min, Integer max) {
         return studentRepository.findByAgeBetween(min, max);
+    }
+
+    public Integer numberAllStudents(){
+        return studentRepository.numberAllStudents();
+    }
+
+    public Integer averageAgeStudents() {
+        return studentRepository.averageAgeStudents();
+    }
+
+    public Collection<Student> getLastFiveStudents() {
+        return studentRepository.getLastFiveStudents();
     }
 }

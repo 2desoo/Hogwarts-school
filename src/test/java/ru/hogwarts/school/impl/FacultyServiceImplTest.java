@@ -5,15 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.entity.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
-import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.impl.FacultyServiceImpl;
 
-import java.util.*;
+import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.postgresql.hostchooser.HostRequirement.any;
+import static ru.hogwarts.school.controller.TestContains.MOCK_FACULTIES;
 
 public class FacultyServiceImplTest {
 
@@ -81,8 +83,9 @@ public class FacultyServiceImplTest {
         rep.save(faculty2);
         rep.save(faculty3);
 
-//        Collection<Faculty> redFaculties = rep.;
-//        Collection<Faculty> greenFaculties = facultyService.getFacultiesSameColor("Red");
-//        assertEquals(2, redFaculties.size());
+        when(rep.findByNameIgnoreCaseOrColorIgnoreCase(any(), any())).thenReturn(MOCK_FACULTIES);
+
+        Collection<Faculty> redFaculties = rep.findByNameIgnoreCaseOrColorIgnoreCase("red","gryffindor");
+        assertEquals(1, redFaculties.size());
     }
 }

@@ -5,11 +5,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.hogwarts.school.model.Avatar;
+import ru.hogwarts.school.entity.Avatar;
+import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.impl.AvatarServiceImpl;
 
 import java.io.IOException;
@@ -23,17 +25,17 @@ import java.nio.file.Path;
 @Tag(name = "API по работе с аватарами")
 public class AvatarController {
 
-    private final AvatarServiceImpl avatarServiceImpl;
+    private final AvatarService avatarService;
 
-    public AvatarController(AvatarServiceImpl avatarServiceImpl) {
-        this.avatarServiceImpl = avatarServiceImpl;
+    public AvatarController(AvatarService avatarService) {
+        this.avatarService = avatarService;
     }
 
 
     @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Upload avatar")
     public ResponseEntity<String> uploadAvatar(@PathVariable Long studentId, @RequestParam MultipartFile avatar) throws IOException {
-        avatarServiceImpl.uploadAvatar(studentId, avatar);
+        avatarService.uploadAvatar(studentId, avatar);
         return ResponseEntity.ok().build();
     }
 
@@ -42,7 +44,7 @@ public class AvatarController {
     @GetMapping(value = "/{id}/avatar/preview")
     @Operation(summary = "Download avatar")
     public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long id) {
-        Avatar avatar = avatarServiceImpl.findAvatar(id);
+        Avatar avatar = avatarService.findAvatar(id);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
@@ -54,7 +56,7 @@ public class AvatarController {
     @GetMapping(value = "/{id}/avatar")
     @Operation(summary = "Download avatar")
     public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException {
-        Avatar avatar = avatarServiceImpl.findAvatar(id);
+        Avatar avatar = avatarService.findAvatar(id);
 
         Path path = Path.of(avatar.getFilePath());
 
@@ -65,5 +67,12 @@ public class AvatarController {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+
+    @GetMapping(value = "/avatar", params = {"page", "size"})
+    @Operation(summary = "Получить список аватар постранично")
+    public ResponseEntity<Page<Avatar>> getAvatarsByPage(@RequestParam int page, @RequestParam int size) {
+        Page<Avatar> avatars = avatarService.getAvatarsByPage(page, size);
+        return ResponseEntity.ok(avatars);
     }
 }

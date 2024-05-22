@@ -1,7 +1,7 @@
 package ru.hogwarts.school.controller;
 
-import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.entity.Faculty;
+import ru.hogwarts.school.entity.Student;
 
 import java.util.Collections;
 import java.util.List;
