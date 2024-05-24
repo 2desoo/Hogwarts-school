@@ -69,7 +69,7 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public Page<Avatar> getAvatarsByPage(int pageNumber, int pageSize) {
-        PageRequest pageable = PageRequest.of(pageNumber, pageSize);
+        PageRequest pageable = PageRequest.of(pageNumber - 1, pageSize);
         return avatarRepository.findAll(pageable);
     }
 }
