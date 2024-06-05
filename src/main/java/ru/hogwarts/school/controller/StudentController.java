@@ -9,6 +9,7 @@ import ru.hogwarts.school.entity.Student;
 import ru.hogwarts.school.service.impl.StudentServiceImpl;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -80,5 +81,27 @@ public class StudentController {
     public ResponseEntity<Faculty> getFacultyByStudent(@PathVariable Long id) {
         Faculty faculties = studentServiceImpl.getFacultyByStudent(id);
         return ResponseEntity.ok(faculties);
+    }
+
+    @GetMapping("/name-is-A")
+    @Operation(summary = "Get student where name start is A")
+    public ResponseEntity<List<String>> getStudentsByNameIsA() {
+        return ResponseEntity.ok(studentServiceImpl.getAllStudentByNameIsA());
+    }
+
+    @GetMapping("/average-age")
+    @Operation(summary = "Get average age")
+    public ResponseEntity<Double> getAverageAge() {
+        return ResponseEntity.ok(studentServiceImpl.getAverageAgeStudents());
+    }
+
+    @GetMapping("/students/print-parallel.")
+    public void printParallel() {
+        studentServiceImpl.printParallel();
+    }
+
+    @GetMapping("/print-synchronized")
+    public synchronized void printStudentNamesInSync() {
+        studentServiceImpl.printStudentNamesInSync();
     }
 }

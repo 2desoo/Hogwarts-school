@@ -86,4 +86,10 @@ public class FacultyController {
         Collection<Student> students = facultyServiceImpl.getStudentsByFaculty(id);
         return ResponseEntity.ok(students);
     }
+
+    @GetMapping("/long-name")
+    @Operation(summary = "Get long name")
+    public ResponseEntity<String> getLongNameByFaculties() {
+        return ResponseEntity.ok(facultyServiceImpl.getLongNameFaculty());
+    }
 }
