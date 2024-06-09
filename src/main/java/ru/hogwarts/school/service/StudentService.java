@@ -28,4 +28,12 @@ public interface StudentService {
     Integer averageAgeStudents();
 
     Collection<Student> getLastFiveStudents();
+
+    double getAverageAgeStudents();
+
+    List<String> getAllStudentByNameIsA();
+
+    void printParallel();
+
+    void printStudentNamesInSync(int number);
 }

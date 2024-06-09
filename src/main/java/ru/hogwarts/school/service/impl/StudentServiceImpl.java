@@ -116,12 +116,9 @@ public class StudentServiceImpl implements StudentService {
         }).start();
     }
 
-    public synchronized void printStudentNamesInSync() {
+    public synchronized void printStudentNamesInSync(int number) {
         log.info("Printed student names in synchronized");
         List<Student> students = new ArrayList<>(getAllStudents());
-        System.out.println(students.get(0).getName());
-        System.out.println(students.get(1).getName());
-        System.out.println(students.get(2).getName());
-        System.out.println(students.get(3).getName());
+        System.out.println(students.get(number).getName());
     }
 }
