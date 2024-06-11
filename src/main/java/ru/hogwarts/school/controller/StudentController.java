@@ -101,7 +101,7 @@ public class StudentController {
     }
 
     @GetMapping("/print-synchronized")
-    public synchronized void printStudentNamesInSync(int number) {
-        studentServiceImpl.printStudentNamesInSync(number);
+    public void printSynchronized(){
+        studentServiceImpl.printSynchronized();
     }
 }

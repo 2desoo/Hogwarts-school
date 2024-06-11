@@ -35,5 +35,7 @@ public interface StudentService {
 
     void printParallel();
 
-    void printStudentNamesInSync(int number);
+    void printSynchronized();
+
+    void printStudentNameSync(Student student);
 }

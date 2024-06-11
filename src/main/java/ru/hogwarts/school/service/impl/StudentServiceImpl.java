@@ -116,9 +116,26 @@ public class StudentServiceImpl implements StudentService {
         }).start();
     }
 
-    public synchronized void printStudentNamesInSync(int number) {
-        log.info("Printed student names in synchronized");
-        List<Student> students = new ArrayList<>(getAllStudents());
-        System.out.println(students.get(number).getName());
+    public void printSynchronized() {
+        List<Student> students = studentRepository.findAll();
+
+        if(students.size() >= 6){
+            Thread thread1 = new Thread(() -> {
+                printStudentNameSync(students.get(3));
+                printStudentNameSync(students.get(4));
+            });
+            Thread thread2 = new Thread(() -> {
+                printStudentNameSync(students.get(5));
+                printStudentNameSync(students.get(6));
+            });
+            thread1.start();
+            thread2.start();
+            printStudentNameSync(students.get(1));
+            printStudentNameSync(students.get(2));
+        }
+    }
+
+    public synchronized void printStudentNameSync(Student student) {
+        log.info("Student, id: {}, name: {}", student.getId(), student.getName());
     }
 }
