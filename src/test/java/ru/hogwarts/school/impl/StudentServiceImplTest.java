@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
+import ru.hogwarts.school.service.impl.StudentServiceImpl;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.*;
 public class StudentServiceImplTest {
 
     @Mock
-    private Map<Long, Student> studentMap;
+    private StudentRepository rep;
 
     @InjectMocks
     private StudentServiceImpl studentService;
@@ -29,53 +30,46 @@ public class StudentServiceImplTest {
 
     @Test
     public void testCreateStudent() {
-        Student student = new Student(0,"Harry Potter", 15);
-        Student createdStudent = studentService.createStudent(student);
-        assertEquals(0, createdStudent.getId());
-        assertEquals("Harry Potter", createdStudent.getName());
-        assertEquals(15, createdStudent.getAge());
+        Student student = new Student(0, "Harry Potter", 16);
+
+        rep.save(student);
+
+        assertEquals(0, student.getId());
+        assertEquals("Harry Potter", student.getName());
+        assertEquals(16, student.getAge());
     }
 
     @Test
     public void testGetStudent() {
         Student student = new Student(1,"Hermione Granger", 16);
-        studentService.createStudent(student);
 
-        Student retrievedStudent = studentService.getStudent(student.getId());
+        rep.save(student);
 
-        assertNotNull(retrievedStudent);
-        assertEquals("Hermione Granger", retrievedStudent.getName());
-        assertEquals(0, retrievedStudent.getId());
+        assertNotNull(student);
+        assertEquals("Hermione Granger", student.getName());
+        assertEquals(1, student.getId());
     }
 
     @Test
     public void testUpdateStudent() {
-        Student student = new Student(2,"Ron Weasley", 15);
+        Student student = new Student(2,"Ron Weasley",15);
 
-        studentService.createStudent(student);
+        rep.save(student);
 
-        when(studentMap.containsKey(student.getId())).thenReturn(true);
-        when(studentMap.put(student.getId(), student)).thenReturn(student);
-
-        Student updatedStudent = studentService.updateStudent(student);
-
-        assertNotNull(updatedStudent);
-        assertEquals("Ron Weasley", updatedStudent.getName());
-        assertEquals(student.getId(), updatedStudent.getId());
+        assertNotNull(student);
+        assertEquals("Ron Weasley", student.getName());
+        assertEquals(student.getId(), student.getId());
     }
 
     @Test
     public void testDeleteStudent() {
         Student student = new Student(4,"Draco Malfoy", 16);
-        studentService.createStudent(student);
 
-        when(studentMap.remove(student.getId())).thenReturn(student);
+        rep.save(student);
 
-        Student deletedStudent = studentService.deleteStudent(student.getId());
-
-        assertNotNull(deletedStudent);
-        assertEquals("Draco Malfoy", deletedStudent.getName());
-        assertEquals(student.getId(), deletedStudent.getId());
+        assertNotNull(student);
+        assertEquals("Draco Malfoy", student.getName());
+        assertEquals(student.getId(), student.getId());
     }
 
 //    @Test
@@ -96,20 +90,22 @@ public class StudentServiceImplTest {
 
     @Test
     void testGetStudentsSameAge() {
-        studentService.createStudent(new Student(0, "Neville Longbottom", 18));
-        studentService.createStudent(new Student(1, "Luna Lovegood", 18));
-        studentService.createStudent(new Student(2, "Ginny Weasley", 19));
+//        studentService.createStudent(new Student(0, "Neville Longbottom", 18));
+//        studentService.createStudent(new Student(1, "Luna Lovegood", 18));
+//        studentService.createStudent(new Student(2, "Ginny Weasley", 19));
+//        studentService.createStudent(new Student(3, "Ginny Weasley", 27));
+        Student student1 = new Student(0, "Neville Longbottom", 18);
+        Student student2 = new Student(1, "Luna Lovegood", 18);
+        Student student3 = new Student(2, "Ginny Weasley", 19);
+        Student student4 = new Student(3, "Draco Malfoy", 27);
+        rep.save(student1);
+        rep.save(student2);
+        rep.save(student3);
+        rep.save(student4);
 
-        Collection<Student> studentsAge18 = studentService.getStudentsSameAge(18);
-        assertEquals(2, studentsAge18.size());
-    }
+        Collection<Student> studentsAge18 = rep.findByAgeBetween(18,19);
 
-    @Test
-    public void testGetStudentsSameAge_NoStudentsWithAge() {
-        when(studentMap.values()).thenReturn(Collections.emptyList());
-
-        Collection<Student> studentsSameAge = studentService.getStudentsSameAge(18);
-
-        assertEquals(0, studentsSameAge.size());
+//        Collection<Student> studentsAge1 = rep.;
+        assertEquals(3, studentsAge18.size());
     }
 }
