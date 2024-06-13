@@ -1,45 +1,44 @@
 package ru.hogwarts.school.impl;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.service.FacultyService;
 import ru.hogwarts.school.model.Faculty;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
-    private final Map<Long, Faculty> facultyMap = new HashMap<>();
-    private long id = 0;
+    private final FacultyRepository facultyRepository;
+
+    public FacultyServiceImpl(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
     public Faculty createFaculty(Faculty faculty) {
-        faculty.setId(id++);
-        facultyMap.put(faculty.getId(), faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
     public Faculty getFaculty(Long id) {
-        return facultyMap.get(id);
+        return facultyRepository.getReferenceById(id);
     }
 
     public Faculty updateFaculty(Faculty faculty) {
-        if (!facultyMap.containsKey(faculty.getId())) {
-            return null;
-        }
-        facultyMap.put(faculty.getId(), faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
     public Faculty deleteFaculty(Long id) {
-        return facultyMap.remove(id);
+        Faculty faculty = getFaculty(id);
+        facultyRepository.deleteById(id);
+        return faculty;
+    }
+
+    public Collection<Faculty> allFaculties() {
+        return facultyRepository.findAll();
     }
 
     public Collection<Faculty> getFacultiesSameColor(String color) {
-        ArrayList<Faculty> facultiesSameColor = new ArrayList<>();
-        for (Faculty faculty : facultyMap.values()) {
-            if (Objects.equals(faculty.getColor(), color)) {
-                facultiesSameColor.add(faculty);
-            }
-        }
-        return facultiesSameColor;
+       return allFaculties().stream().filter(faculty -> faculty.getColor().equals(color)).collect(Collectors.toList());
     }
 }
