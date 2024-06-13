@@ -6,6 +6,9 @@ import ru.hogwarts.school.entity.Student;
 import java.util.Collection;
 import java.util.List;
 
+/*
+Methods for the service
+ */
 public interface FacultyService {
     Faculty createFaculty(Faculty faculty);
 

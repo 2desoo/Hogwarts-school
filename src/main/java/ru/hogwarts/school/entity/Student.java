@@ -3,6 +3,9 @@ package ru.hogwarts.school.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+/*
+Added getter/setter/equalsAndHashCode/ToString
+ */
 @Entity
 @Getter
 @Setter
@@ -10,10 +13,16 @@ import lombok.*;
 @ToString
 public class Student {
 
+    /*
+    Connection from faculty
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
+    /*
+Generation ID
+    */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/*
+Added getter/setter/equalsAndHashCode/ToString
+ */
 @Entity
 @Getter
 @Setter
@@ -13,6 +16,9 @@ import lombok.ToString;
 @ToString
 public class Avatar {
 
+    /*
+    Generation ID
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -25,6 +31,9 @@ public class Avatar {
 
     private byte[] data;
 
+    /*
+    Connection from student
+     */
     @OneToOne
     private Student student;
 

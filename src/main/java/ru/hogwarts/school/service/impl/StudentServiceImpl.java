@@ -9,25 +9,38 @@ import ru.hogwarts.school.entity.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+
+    /*
+    Added log
+     */
     private final static Logger log = LoggerFactory.getLogger(StudentServiceImpl.class);
+
+    /*
+    Added student repository
+     */
     private final StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
+    /*
+    Created student methods
+     */
     public Student createStudent(Student student) {
         log.info("Created student");
         return studentRepository.save(student);
     }
 
+    /*
+    Get student by id methods
+     */
     public Student getStudent(Long id) {
         log.info("Student is get {}", id);
         return studentRepository.findById(id).orElseThrow(()->
@@ -36,16 +49,25 @@ public class StudentServiceImpl implements StudentService {
         });
     }
 
+    /*
+    Get all students methods
+     */
     public List<Student> getAllStudents() {
         log.info("Get all students");
         return studentRepository.findAll();
     }
 
+    /*
+    Updated student methods
+     */
     public Student updateStudent(Student student) {
         log.info("Student is updated");
         return studentRepository.save(student);
     }
 
+    /*
+    Deleted student methods
+     */
     public Student deleteStudent(Long id) {
         log.info("Student is deleted {}", id);
         Student student = getStudent(id);
@@ -53,11 +75,17 @@ public class StudentServiceImpl implements StudentService {
         return student;
     }
 
+    /*
+    Get students same age methods
+     */
     public Collection<Student> getStudentsSameAge(int age) {
         log.info("Get student by age {}", age);
         return getAllStudents().stream().filter(student -> student.getAge() == age).collect(Collectors.toList());
     }
 
+    /*
+    Get faculty by students methods
+     */
     public Faculty getFacultyByStudent(Long studentId) {
         log.info("Get faculty by student {}", studentId);
         return studentRepository.findById(studentId)
@@ -65,26 +93,41 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new EntityNotFoundException("Студент не найден " + studentId));
     }
 
+    /*
+    Get students by age range methods
+     */
     public List<Student> getStudentsByAgeRange(Integer min, Integer max) {
         log.info("Get student by age-range {} {}", min, max);
         return studentRepository.findByAgeBetween(min, max);
     }
 
+    /*
+    List count students methods
+     */
     public Integer numberAllStudents(){
         log.info("List count students");
         return studentRepository.numberAllStudents();
     }
 
+    /*
+    Get average age students methods
+     */
     public Integer averageAgeStudents() {
         log.info("Get average age all students");
         return studentRepository.averageAgeStudents();
     }
 
+    /*
+    Get last five students methods
+     */
     public Collection<Student> getLastFiveStudents() {
         log.info("Get last five students");
         return studentRepository.getLastFiveStudents();
     }
 
+    /*
+    Get all students where name start with A methods
+     */
     public List<String> getAllStudentByNameIsA() {
         log.info("Get all student by name is start A");
         return getAllStudents().stream()
@@ -94,6 +137,9 @@ public class StudentServiceImpl implements StudentService {
                 .sorted().toList();
     }
 
+    /*
+    Get average age students methods
+     */
     public double getAverageAgeStudents() {
         log.info("Get average age students");
         return getAllStudents().stream()
@@ -101,6 +147,9 @@ public class StudentServiceImpl implements StudentService {
                 .average().orElse(0);
     }
 
+    /*
+    Printed parallel lists methods
+     */
     public void printParallel() {
         log.info("Print parallel");
         List<Student> all = studentRepository.findAll();
@@ -116,6 +165,9 @@ public class StudentServiceImpl implements StudentService {
         }).start();
     }
 
+    /*
+    Printed synchronized lists methods
+     */
     public void printSynchronized() {
         List<Student> students = studentRepository.findAll();
 
@@ -135,6 +187,9 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+    /*
+    Printed student name for synchronized methods
+     */
     public synchronized void printStudentNameSync(Student student) {
         log.info("Student, id: {}, name: {}", student.getId(), student.getName());
     }

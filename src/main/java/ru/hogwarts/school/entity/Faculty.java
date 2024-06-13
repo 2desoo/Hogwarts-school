@@ -8,7 +8,9 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/*
+Added getter/setter/equalsAndHashCode/ToString
+ */
 @Entity
 @Getter
 @Setter
@@ -17,10 +19,16 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Faculty {
 
+    /*
+    Connection from student
+     */
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Student> students = new ArrayList<>();
 
+    /*
+   Generation ID
+    */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

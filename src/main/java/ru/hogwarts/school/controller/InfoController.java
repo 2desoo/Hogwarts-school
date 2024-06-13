@@ -12,14 +12,23 @@ import java.util.stream.Stream;
 @RequestMapping(path = "/info")
 public class InfoController {
 
+    /*
+    Added parameters
+     */
     @Value("${server.port}")
     private int port;
 
+    /*
+    Get info for port
+     */
     @GetMapping(path = "/port")
     public ResponseEntity<Integer> getPort() {
         return ResponseEntity.ok(port);
     }
 
+    /*
+    Test
+     */
     @GetMapping("test")
     public ResponseEntity<Long> test() {
         Long start = System.currentTimeMillis();

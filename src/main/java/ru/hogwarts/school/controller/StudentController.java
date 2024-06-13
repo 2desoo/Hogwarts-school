@@ -15,12 +15,19 @@ import java.util.List;
 @RequestMapping("/student")
 @Tag(name = "API по работе со студентами")
 public class StudentController {
+
+    /*
+    Added service
+     */
     private final StudentServiceImpl studentServiceImpl;
 
     public StudentController(StudentServiceImpl studentServiceImpl) {
         this.studentServiceImpl = studentServiceImpl;
     }
 
+    /*
+    Created student
+     */
     @PostMapping
     @Operation(summary = "Create student")
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
@@ -28,6 +35,9 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
+    /*
+    Get student by ID
+     */
     @GetMapping("{id}")
     @Operation(summary = "Get student by ID")
     public ResponseEntity<Student> getStudent(@PathVariable long id) {
@@ -38,6 +48,9 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
+    /*
+    Get all students
+     */
     @GetMapping(path = "/all")
     @Operation(summary = "Get all students")
     public ResponseEntity<Collection<Student>> getAllStudents() {
@@ -45,6 +58,9 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
+    /*
+    Updated info for student
+     */
     @PutMapping
     @Operation(summary = "Update info for student")
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
@@ -55,6 +71,9 @@ public class StudentController {
         return ResponseEntity.ok(student1);
     }
 
+    /*
+    Deleted student by ID
+     */
     @DeleteMapping("{id}")
     @Operation(summary = "Delete student by ID")
     public ResponseEntity<Student> deleteStudent(@PathVariable long id) {
@@ -62,6 +81,9 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
+    /*
+    Get student same age
+     */
     @GetMapping("/age")
     @Operation(summary = "Get student same age")
     public ResponseEntity<Collection<Student>> getStudentsSameAge(@RequestParam int age) {
@@ -69,6 +91,9 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
+    /*
+    Get student by age-range
+     */
     @GetMapping("/age-range")
     @Operation(summary = "Get student by age-range")
     public ResponseEntity<Collection<Student>> getStudentsByAgeRange(@RequestParam Integer min, @RequestParam Integer max) {
@@ -76,6 +101,9 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
+    /*
+    Get faculty by student
+     */
     @GetMapping("/{id}/faculty")
     @Operation(summary = "Get faculty by student")
     public ResponseEntity<Faculty> getFacultyByStudent(@PathVariable Long id) {
@@ -83,23 +111,35 @@ public class StudentController {
         return ResponseEntity.ok(faculties);
     }
 
+    /*
+    Get student where name start with A
+     */
     @GetMapping("/name-is-A")
     @Operation(summary = "Get student where name start is A")
     public ResponseEntity<List<String>> getStudentsByNameIsA() {
         return ResponseEntity.ok(studentServiceImpl.getAllStudentByNameIsA());
     }
 
+    /*
+    Get average age
+     */
     @GetMapping("/average-age")
     @Operation(summary = "Get average age")
     public ResponseEntity<Double> getAverageAge() {
         return ResponseEntity.ok(studentServiceImpl.getAverageAgeStudents());
     }
 
+    /*
+    Printed list from parallel
+     */
     @GetMapping("/students/print-parallel.")
     public void printParallel() {
         studentServiceImpl.printParallel();
     }
 
+    /*
+    Printed list from synchronized
+     */
     @GetMapping("/print-synchronized")
     public void printSynchronized(){
         studentServiceImpl.printSynchronized();

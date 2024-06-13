@@ -23,10 +23,24 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 public class AvatarServiceImpl implements AvatarService {
 
+    /*
+    Added avatar repository
+     */
     private final AvatarRepository avatarRepository;
+
+    /*
+    Added log
+     */
     private final static Logger log = LoggerFactory.getLogger(AvatarServiceImpl.class);
+
+    /*
+    Added student repository
+     */
     private final StudentRepository studentRepository;
 
+    /*
+    Path from avatar
+     */
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
 
@@ -36,7 +50,9 @@ public class AvatarServiceImpl implements AvatarService {
         this.studentRepository = studentRepository;
     }
 
-
+    /*
+    Uploaded avatar methods
+     */
     public void uploadAvatar(Long studentId, MultipartFile file) throws IOException {
         log.info("Avatar is uploaded");
 
@@ -64,6 +80,9 @@ public class AvatarServiceImpl implements AvatarService {
         avatarRepository.save(avatar);
     }
 
+    /*
+    Find avatar methods
+     */
     public Avatar findAvatar(long studentId) {
         log.info("Find avatar is done");
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
@@ -75,6 +94,9 @@ public class AvatarServiceImpl implements AvatarService {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
+    /*
+    Get avatars by page methods
+     */
     public Page<Avatar> getAvatarsByPage(int pageNumber, int pageSize) {
         log.info("Get avatars by page");
         PageRequest pageable = PageRequest.of(pageNumber - 1, pageSize);

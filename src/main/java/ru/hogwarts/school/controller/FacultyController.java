@@ -16,12 +16,18 @@ import java.util.Collections;
 @Tag(name = "API по работе с факультетами")
 public class FacultyController {
 
+    /*
+    Added service
+     */
     private final FacultyServiceImpl facultyServiceImpl;
 
     public FacultyController(FacultyServiceImpl facultyServiceImpl) {
         this.facultyServiceImpl = facultyServiceImpl;
     }
 
+    /*
+    Created faculty
+     */
     @PostMapping
     @Operation(summary = "Create faculty")
     public ResponseEntity<Faculty> createFaculty(@RequestBody Faculty faculty) {
@@ -29,6 +35,9 @@ public class FacultyController {
         return ResponseEntity.ok(faculty1);
     }
 
+    /*
+    Get faculty by ID
+     */
     @GetMapping("{id}")
     @Operation(summary = "Get faculty by ID")
     public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
@@ -39,6 +48,9 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
+    /*
+    Get info for all faculties
+     */
     @GetMapping("/all")
     @Operation(summary = "Get info for all faculties")
     public ResponseEntity<Collection<Faculty>> getAllFaculties() {
@@ -46,6 +58,9 @@ public class FacultyController {
         return ResponseEntity.ok(faculties);
     }
 
+    /*
+    Updated info for faculty
+     */
     @PutMapping
     @Operation(summary = "Update info for faculty")
     public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {
@@ -56,6 +71,9 @@ public class FacultyController {
         return ResponseEntity.ok(foundFaculty);
     }
 
+    /*
+    Deleted faculty by ID
+     */
     @DeleteMapping("{id}")
     @Operation(summary = "Delete faculty by ID")
     public ResponseEntity<Faculty> deleteFaculty(@PathVariable long id) {
@@ -63,6 +81,9 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
+    /*
+    Get info for faculties same color
+     */
     @GetMapping
     @Operation(summary = "Get info for faculties same color")
     public ResponseEntity<Collection<Faculty>> getFacultiesSameColor(@RequestParam(required = false) String color) {
@@ -72,6 +93,9 @@ public class FacultyController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
+    /*
+    Find faculties by name or color"
+     */
     @GetMapping("/search")
     @Operation(summary = "Find faculties by name or color")
     public ResponseEntity<Collection<Faculty>> findFacultiesByNameOrColor(@RequestParam String color,
@@ -80,6 +104,9 @@ public class FacultyController {
         return ResponseEntity.ok(faculties);
     }
 
+    /*
+    Get info for student by faculty
+     */
     @GetMapping("/{id}/students")
     @Operation(summary = "Get info for student by faculty")
     public ResponseEntity<Collection<Student>> getStudentsByFaculty(@PathVariable Long id) {
@@ -87,6 +114,9 @@ public class FacultyController {
         return ResponseEntity.ok(students);
     }
 
+    /*
+    Find long name
+     */
     @GetMapping("/long-name")
     @Operation(summary = "Get long name")
     public ResponseEntity<String> getLongNameByFaculties() {

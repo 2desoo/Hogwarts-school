@@ -5,7 +5,9 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.entity.Avatar;
 
 import java.io.IOException;
-
+/*
+Methods for the service
+ */
 public interface AvatarService {
 
     void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException;
