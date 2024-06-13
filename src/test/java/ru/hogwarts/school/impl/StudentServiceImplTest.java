@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.service.impl.StudentServiceImpl;
 
 import java.util.*;
 
@@ -29,11 +29,11 @@ public class StudentServiceImplTest {
 
     @Test
     public void testCreateStudent() {
-        Student student = new Student(0,"Harry Potter", 15);
+        Student student = new Student(0, "Harry Potter", 16);
         Student createdStudent = studentService.createStudent(student);
         assertEquals(0, createdStudent.getId());
         assertEquals("Harry Potter", createdStudent.getName());
-        assertEquals(15, createdStudent.getAge());
+        assertEquals(16, createdStudent.getAge());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class StudentServiceImplTest {
 
     @Test
     public void testUpdateStudent() {
-        Student student = new Student(2,"Ron Weasley", 15);
+        Student student = new Student(2,"Ron Weasley",15);
 
         studentService.createStudent(student);
 
